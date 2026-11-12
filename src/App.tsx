@@ -15,6 +15,7 @@ import { PeriodManagerModal } from './components/PeriodManagerModal';
 import { DailyReminderModal } from './components/DailyReminderModal';
 import { DashboardAnalytics } from './components/DashboardAnalytics';
 import { CompanyPortalSelector } from './components/CompanyPortalSelector';
+import { GuideModal } from './components/GuideModal';
 import { formatDisplayDate } from './utils/formatters';
 import {
   RotateCcw,
@@ -24,6 +25,8 @@ import {
   FileSpreadsheet,
   BarChart3,
   ListOrdered,
+  PlusCircle,
+  Plus,
 } from 'lucide-react';
 
 const STORAGE_KEY_PERIODS = 'sj_nam_finance_periods_v1';
@@ -103,6 +106,7 @@ export default function App() {
   const [isRekapPrintOpen, setIsRekapPrintOpen] = useState(false);
   const [isPeriodManagerOpen, setIsPeriodManagerOpen] = useState(false);
   const [isReminderModalOpen, setIsReminderModalOpen] = useState(false);
+  const [isGuideModalOpen, setIsGuideModalOpen] = useState(false);
 
   // Sync with LocalStorage
   useEffect(() => {
@@ -292,6 +296,7 @@ export default function App() {
           setEditingTransaction(null);
           setIsTransactionModalOpen(true);
         }}
+        onOpenGuide={() => setIsGuideModalOpen(true)}
         reminderConfig={reminderConfig}
         todayTransactionCount={todayTransactionCount}
       />
@@ -308,60 +313,60 @@ export default function App() {
         />
 
         {/* Sub-navigation tabs: Rekap Tabel vs Analitik */}
-        <div className="flex items-center justify-between">
-          <div className="flex items-center bg-white p-1 rounded-xl border border-slate-200/90 shadow-2xs">
+        <div className="flex flex-col sm:flex-row items-stretch sm:items-center justify-between gap-3">
+          <div className="flex items-center bg-[#0f172a] p-1.5 rounded-xl shadow-xs border border-[#334155]">
             <button
               onClick={() => setActiveViewTab('TABLE')}
-              className={`flex items-center gap-2 px-3.5 py-1.5 rounded-lg text-xs font-bold transition-all ${
+              className={`flex-1 sm:flex-initial flex items-center justify-center gap-2 px-3.5 py-2 rounded-lg text-xs font-black transition-all cursor-pointer ${
                 activeViewTab === 'TABLE'
-                  ? 'bg-slate-900 text-white shadow-xs'
-                  : 'text-slate-600 hover:text-slate-900'
+                  ? 'bg-[#1d4ed8] text-white shadow-md'
+                  : 'text-slate-300 hover:text-white hover:bg-[#1e293b]'
               }`}
             >
-              <ListOrdered className="w-3.5 h-3.5" />
+              <ListOrdered className="w-4 h-4 text-white" />
               <span>Buku Kas & Bank (Tabel 1:1)</span>
             </button>
 
             <button
               onClick={() => setActiveViewTab('ANALYTICS')}
-              className={`flex items-center gap-2 px-3.5 py-1.5 rounded-lg text-xs font-bold transition-all ${
+              className={`flex-1 sm:flex-initial flex items-center justify-center gap-2 px-3.5 py-2 rounded-lg text-xs font-black transition-all cursor-pointer ${
                 activeViewTab === 'ANALYTICS'
-                  ? 'bg-slate-900 text-white shadow-xs'
-                  : 'text-slate-600 hover:text-slate-900'
+                  ? 'bg-[#1d4ed8] text-white shadow-md'
+                  : 'text-slate-300 hover:text-white hover:bg-[#1e293b]'
               }`}
             >
-              <BarChart3 className="w-3.5 h-3.5" />
+              <BarChart3 className="w-4 h-4 text-white" />
               <span>Analisis & Ringkasan Biaya</span>
             </button>
           </div>
 
           {/* Backup & System Controls */}
-          <div className="flex items-center gap-2">
+          <div className="flex items-center gap-2 justify-end">
             <button
               onClick={handleExportBackup}
               title="Backup Data JSON"
-              className="p-1.5 bg-white hover:bg-slate-50 text-slate-600 rounded-lg border border-slate-200 text-xs flex items-center gap-1"
+              className="px-3 py-2 bg-[#1e293b] hover:bg-[#334155] text-white rounded-lg border border-[#475569] text-xs font-bold flex items-center gap-1.5 shadow-2xs hover:shadow-xs transition-colors cursor-pointer"
             >
-              <Download className="w-3.5 h-3.5" />
-              <span className="hidden md:inline text-[11px] font-semibold">Backup</span>
+              <Download className="w-3.5 h-3.5 text-blue-400" />
+              <span className="hidden md:inline text-[11px]">Backup</span>
             </button>
 
             <label
               title="Restore Data JSON"
-              className="p-1.5 bg-white hover:bg-slate-50 text-slate-600 rounded-lg border border-slate-200 text-xs flex items-center gap-1 cursor-pointer"
+              className="px-3 py-2 bg-[#1e293b] hover:bg-[#334155] text-white rounded-lg border border-[#475569] text-xs font-bold flex items-center gap-1.5 shadow-2xs hover:shadow-xs transition-colors cursor-pointer"
             >
-              <Upload className="w-3.5 h-3.5" />
-              <span className="hidden md:inline text-[11px] font-semibold">Restore</span>
+              <Upload className="w-3.5 h-3.5 text-amber-400" />
+              <span className="hidden md:inline text-[11px]">Restore</span>
               <input type="file" accept=".json" onChange={handleImportBackup} className="hidden" />
             </label>
 
             <button
               onClick={handleResetData}
               title="Kembalikan Data Contoh Asli SJ & NAM"
-              className="p-1.5 bg-white hover:bg-rose-50 text-slate-500 hover:text-rose-600 rounded-lg border border-slate-200 text-xs flex items-center gap-1 transition-colors"
+              className="px-3 py-2 bg-[#b91c1c] hover:bg-[#991b1b] text-white rounded-lg border border-[#dc2626] text-xs font-bold flex items-center gap-1.5 shadow-2xs hover:shadow-xs transition-colors cursor-pointer"
             >
-              <RotateCcw className="w-3.5 h-3.5" />
-              <span className="hidden md:inline text-[11px] font-semibold">Reset Contoh</span>
+              <RotateCcw className="w-3.5 h-3.5 text-rose-200" />
+              <span className="hidden md:inline text-[11px]">Reset Contoh</span>
             </button>
           </div>
         </div>
@@ -455,6 +460,16 @@ export default function App() {
         onClose={() => setIsReminderModalOpen(false)}
         onSaveConfig={setReminderConfig}
         todayTransactionCount={todayTransactionCount}
+      />
+
+      <GuideModal
+        isOpen={isGuideModalOpen}
+        onClose={() => setIsGuideModalOpen(false)}
+        onOpenNewTransaction={() => {
+          setIsGuideModalOpen(false);
+          setEditingTransaction(null);
+          setIsTransactionModalOpen(true);
+        }}
       />
     </div>
   );

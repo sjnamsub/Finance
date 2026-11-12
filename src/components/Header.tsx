@@ -11,6 +11,7 @@ import {
   Printer,
   ShieldCheck,
   AlertCircle,
+  HelpCircle,
 } from 'lucide-react';
 import { CompanyConfig, CompanyId, PeriodInfo, ReminderConfig } from '../types/finance';
 
@@ -23,6 +24,7 @@ interface Props {
   onOpenPeriodManager: () => void;
   onOpenReminderModal: () => void;
   onOpenNewTransaction: () => void;
+  onOpenGuide?: () => void;
   reminderConfig: ReminderConfig;
   todayTransactionCount: number;
 }
@@ -35,6 +37,7 @@ export const Header: React.FC<Props> = ({
   onOpenPeriodManager,
   onOpenReminderModal,
   onOpenNewTransaction,
+  onOpenGuide,
   reminderConfig,
   todayTransactionCount,
 }) => {
@@ -61,13 +64,13 @@ export const Header: React.FC<Props> = ({
         </div>
       )}
 
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="flex items-center justify-between h-16 sm:h-18">
-          {/* Left: Branding & Airlines Switcher */}
-          <div className="flex items-center gap-3 sm:gap-6">
-            <div className="flex items-center gap-2.5">
+      <div className="max-w-7xl mx-auto px-3 sm:px-6 lg:px-8">
+        <div className="flex flex-col sm:flex-row sm:items-center justify-between py-2.5 sm:py-3 gap-2.5">
+          {/* Top/Left: Branding & Airline Switcher */}
+          <div className="flex items-center justify-between sm:justify-start gap-2 sm:gap-4 flex-wrap">
+            <div className="flex items-center gap-2">
               <div
-                className="w-10 h-10 rounded-xl flex items-center justify-center text-white shadow-md font-black text-sm tracking-tighter"
+                className="w-9 h-9 sm:w-10 sm:h-10 rounded-xl flex items-center justify-center text-white shadow-md font-black text-sm shrink-0"
                 style={{
                   backgroundColor:
                     activeCompanyId === 'SRIWIJAYA' ? '#002B7F' : '#0066B2',
@@ -77,95 +80,102 @@ export const Header: React.FC<Props> = ({
               </div>
               <div>
                 <div className="flex items-center gap-1.5">
-                  <span className="font-extrabold text-sm sm:text-base tracking-tight text-slate-900">
+                  <span className="font-extrabold text-xs sm:text-sm tracking-tight text-slate-900 whitespace-nowrap">
                     {activeCompany.name}
                   </span>
                   <span
-                    className={`text-[10px] px-2 py-0.5 rounded font-black text-white ${
+                    className={`text-[10px] px-1.5 py-0.5 rounded font-black text-white ${
                       activeCompanyId === 'SRIWIJAYA' ? 'bg-[#002B7F]' : 'bg-[#0066B2]'
                     }`}
                   >
                     {activeCompany.shortCode}
                   </span>
                 </div>
-                <div className="text-[11px] text-slate-500 font-medium hidden sm:block">
-                  Buku Kas & Bank Distrik SUB (Surabaya) • Terpisah & Terintegrasi
+                <div className="text-[10px] text-slate-500 font-medium hidden md:block">
+                  Kas & Bank Distrik SUB (Surabaya)
                 </div>
               </div>
             </div>
 
-            {/* Prominent 2-Choice Company Switcher */}
-            <div className="flex items-center bg-slate-100 p-1 rounded-xl border border-slate-200/90 shadow-2xs">
+            {/* 2-Choice Company Switcher */}
+            <div className="flex items-center bg-[#f1f5f9] p-1 rounded-xl border border-[#cbd5e1] shadow-2xs">
               <button
                 type="button"
                 onClick={() => onSelectCompany('SRIWIJAYA')}
-                className={`px-3 py-1.5 rounded-lg text-xs font-bold transition-all flex items-center gap-1.5 ${
+                className={`px-2.5 py-1.5 rounded-lg text-xs font-bold transition-all flex items-center gap-1.5 cursor-pointer ${
                   activeCompanyId === 'SRIWIJAYA'
-                    ? 'bg-[#002B7F] text-white shadow-sm ring-1 ring-[#002B7F]'
-                    : 'text-slate-600 hover:text-slate-900 hover:bg-slate-200/60'
+                    ? 'bg-[#002B7F] text-white shadow-sm'
+                    : 'text-slate-700 hover:text-slate-900 hover:bg-[#e2e8f0]'
                 }`}
               >
-                <span className="w-2 h-2 rounded-full bg-red-500" />
-                <span>1. SRIWIJAYA AIR</span>
+                <span className="w-2 h-2 rounded-full bg-[#ef4444]" />
+                <span>1. SRIWIJAYA</span>
                 <span className="text-[10px] opacity-80 font-mono">SJ</span>
               </button>
 
               <button
                 type="button"
                 onClick={() => onSelectCompany('NAM')}
-                className={`px-3 py-1.5 rounded-lg text-xs font-bold transition-all flex items-center gap-1.5 ${
+                className={`px-2.5 py-1.5 rounded-lg text-xs font-bold transition-all flex items-center gap-1.5 cursor-pointer ${
                   activeCompanyId === 'NAM'
-                    ? 'bg-[#0066B2] text-white shadow-sm ring-1 ring-[#0066B2]'
-                    : 'text-slate-600 hover:text-slate-900 hover:bg-slate-200/60'
+                    ? 'bg-[#0066B2] text-white shadow-sm'
+                    : 'text-slate-700 hover:text-slate-900 hover:bg-[#e2e8f0]'
                 }`}
               >
-                <span className="w-2 h-2 rounded-full bg-orange-400" />
+                <span className="w-2 h-2 rounded-full bg-[#f59e0b]" />
                 <span>2. NAM AIR</span>
                 <span className="text-[10px] opacity-80 font-mono">IN</span>
               </button>
             </div>
           </div>
 
-          {/* Right: Period Dropdown, Reminder Bell, New Transaction Button */}
-          <div className="flex items-center gap-2 sm:gap-3">
+          {/* Bottom/Right: Action Buttons & Period */}
+          <div className="flex items-center gap-1.5 sm:gap-2 justify-end flex-wrap">
+            {/* Guide Button */}
+            {onOpenGuide && (
+              <button
+                onClick={onOpenGuide}
+                title="Panduan Cara Buat Transaksi KSUB & BSUB"
+                className="flex items-center gap-1 px-2.5 py-2 rounded-xl border border-[#cbd5e1] bg-[#f8fafc] hover:bg-[#e2e8f0] text-[#1e293b] transition-all text-xs font-bold shadow-2xs cursor-pointer"
+              >
+                <HelpCircle className="w-4 h-4 text-[#1d4ed8]" />
+                <span className="hidden sm:inline">Panduan</span>
+              </button>
+            )}
+
             {/* Active Period Pill Button */}
             <button
               onClick={onOpenPeriodManager}
-              className="flex items-center gap-2 px-3 py-1.5 bg-slate-50 hover:bg-slate-100 border border-slate-200 rounded-xl text-xs font-semibold text-slate-700 transition-colors"
+              className="flex items-center gap-1.5 px-3 py-2 bg-[#0f172a] hover:bg-[#1e293b] text-white border border-[#334155] rounded-xl text-xs font-bold transition-all shadow-2xs cursor-pointer"
             >
-              <Calendar className="w-4 h-4 text-blue-600" />
-              <div className="text-left hidden sm:block">
-                <div className="text-[10px] text-slate-400 leading-none">Periode Aktif</div>
-                <div className="font-bold text-slate-800 leading-tight">
-                  {activePeriod.dateRangeLabel}
-                </div>
-              </div>
-              <ChevronDown className="w-3.5 h-3.5 text-slate-400" />
+              <Calendar className="w-4 h-4 text-[#fbbf24]" />
+              <span className="text-white text-xs">{activePeriod.dateRangeLabel}</span>
+              <ChevronDown className="w-3.5 h-3.5 text-slate-300" />
             </button>
 
-            {/* Daily Reminder Bell with Notification Badge */}
+            {/* Daily Reminder Bell */}
             <button
               onClick={onOpenReminderModal}
               title="Pengaturan Pengingat Harian & Alarm Input Kas"
-              className="relative p-2 rounded-xl border border-slate-200 bg-white hover:bg-slate-50 text-slate-700 transition-colors"
+              className="relative p-2 rounded-xl border border-[#cbd5e1] bg-[#f8fafc] hover:bg-[#e2e8f0] text-slate-800 transition-colors shadow-2xs cursor-pointer"
             >
               {todayTransactionCount === 0 && reminderConfig.enabled ? (
-                <BellRing className="w-5 h-5 text-amber-500 animate-pulse" />
+                <BellRing className="w-4 h-4 text-[#d97706] animate-pulse" />
               ) : (
-                <Bell className="w-5 h-5 text-slate-600" />
+                <Bell className="w-4 h-4 text-slate-700" />
               )}
               {todayTransactionCount === 0 && reminderConfig.enabled && (
-                <span className="absolute top-1 right-1 w-2.5 h-2.5 bg-red-500 rounded-full ring-2 ring-white animate-ping" />
+                <span className="absolute -top-1 -right-1 w-2.5 h-2.5 bg-[#dc2626] rounded-full ring-2 ring-white" />
               )}
             </button>
 
-            {/* Quick Add Button */}
+            {/* Prominent Solid TAMBAH TRANSAKSI Button */}
             <button
               onClick={onOpenNewTransaction}
-              className="inline-flex items-center gap-1.5 px-3.5 py-2 bg-blue-600 hover:bg-blue-700 text-white rounded-xl text-xs font-bold shadow-xs transition-colors"
+              className="inline-flex items-center gap-1.5 px-3.5 py-2 bg-[#1d4ed8] hover:bg-[#1e40af] text-white rounded-xl text-xs sm:text-sm font-black shadow-md border-2 border-[#1e40af] hover:scale-[1.02] active:scale-95 transition-all cursor-pointer"
             >
-              <Plus className="w-4 h-4" />
-              <span className="hidden sm:inline">Input Transaksi</span>
+              <Plus className="w-4 h-4 sm:w-5 sm:h-5 stroke-[3] text-white" />
+              <span className="tracking-wide whitespace-nowrap">+ TRANSAKSI</span>
             </button>
           </div>
         </div>

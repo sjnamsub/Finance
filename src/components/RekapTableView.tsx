@@ -85,104 +85,107 @@ export const RekapTableView: React.FC<Props> = ({
             </h1>
           </div>
 
-          {/* Action Buttons */}
-          <div className="flex flex-wrap items-center gap-2">
+          {/* Clean, Non-Overlapping Action Toolbar */}
+          <div className="grid grid-cols-2 sm:flex sm:flex-wrap items-center gap-2">
+            {/* Primary Add Transaction Button */}
             <button
               onClick={onOpenNewTransaction}
-              className="inline-flex items-center gap-2 px-3.5 py-2 bg-blue-600 hover:bg-blue-700 text-white rounded-xl text-xs font-bold shadow-xs transition-colors"
+              className="col-span-2 sm:col-auto inline-flex items-center justify-center gap-2 px-4 py-2.5 bg-[#1d4ed8] hover:bg-[#1e40af] text-white rounded-xl text-xs sm:text-sm font-black shadow-md border-2 border-[#1e40af] hover:scale-[1.02] active:scale-95 transition-all cursor-pointer"
             >
-              <Plus className="w-4 h-4" />
-              <span>Input Transaksi</span>
+              <Plus className="w-4 h-4 sm:w-5 sm:h-5 stroke-[3] text-white" />
+              <span>+ INPUT TRANSAKSI</span>
             </button>
 
+            {/* Print Rekap 1:1 Button */}
             <button
               onClick={onPrintRekap}
-              className="inline-flex items-center gap-1.5 px-3 py-2 bg-slate-100 hover:bg-slate-200 text-slate-800 rounded-xl text-xs font-bold border border-slate-200 transition-colors"
+              className="inline-flex items-center justify-center gap-2 px-3 py-2 bg-[#0f172a] hover:bg-[#1e293b] text-white rounded-xl text-xs font-bold shadow-xs border border-[#334155] transition-colors cursor-pointer"
             >
-              <Printer className="w-4 h-4 text-slate-600" />
+              <Printer className="w-4 h-4 text-slate-300" />
               <span>Cetak Rekap 1:1</span>
             </button>
 
-            <div className="relative group">
-              <button
-                onClick={() => exportPeriodToExcel(company, period, transactions)}
-                className="inline-flex items-center gap-1.5 px-3 py-2 bg-emerald-600 hover:bg-emerald-700 text-white rounded-xl text-xs font-bold shadow-xs transition-colors"
-              >
-                <FileSpreadsheet className="w-4 h-4" />
-                <span>Export Excel</span>
-              </button>
-            </div>
+            {/* Export Excel Button */}
+            <button
+              onClick={() => exportPeriodToExcel(company, period, transactions)}
+              className="inline-flex items-center justify-center gap-2 px-3 py-2 bg-[#047857] hover:bg-[#065f46] text-white rounded-xl text-xs font-bold shadow-xs border border-[#065f46] transition-colors cursor-pointer"
+            >
+              <FileSpreadsheet className="w-4 h-4 text-emerald-200" />
+              <span>Export Excel</span>
+            </button>
 
+            {/* Export All Periods Button */}
             <button
               onClick={() => exportAllPeriodsToExcel(company, allPeriods, transactions)}
-              title="Download seluruh periode 1-15 & 16-Akhir dalam satu workbook Excel terpadu"
-              className="inline-flex items-center gap-1 px-2.5 py-2 bg-emerald-50 hover:bg-emerald-100 text-emerald-800 rounded-xl text-xs font-semibold border border-emerald-200 transition-colors"
+              title="Download seluruh periode 1-15 & 16-Akhir dalam satu file Excel multi-sheet"
+              className="inline-flex items-center justify-center gap-1.5 px-3 py-2 bg-[#064e3b] hover:bg-[#022c22] text-white rounded-xl text-xs font-bold shadow-xs border border-[#065f46] transition-colors cursor-pointer"
             >
-              <Layers className="w-3.5 h-3.5 text-emerald-600" />
+              <Layers className="w-4 h-4 text-emerald-300" />
               <span>Semua Periode</span>
             </button>
 
+            {/* Manage Periods Button */}
             <button
               onClick={onManagePeriods}
-              className="inline-flex items-center gap-1.5 px-3 py-2 bg-indigo-50 hover:bg-indigo-100 text-indigo-700 rounded-xl text-xs font-bold border border-indigo-200 transition-colors"
+              className="inline-flex items-center justify-center gap-2 px-3 py-2 bg-[#6b21a8] hover:bg-[#581c87] text-white rounded-xl text-xs font-bold shadow-xs border border-[#581c87] transition-colors cursor-pointer"
             >
-              <ChevronDown className="w-4 h-4" />
-              <span>Ganti / Tambah Periode</span>
+              <ChevronDown className="w-4 h-4 text-purple-200" />
+              <span>Ganti Periode</span>
             </button>
           </div>
         </div>
 
         {/* Live Liquidity Overview Cards */}
         <div className="grid grid-cols-2 md:grid-cols-4 gap-3 pt-4">
-          <div className="bg-slate-50/70 p-3.5 rounded-xl border border-slate-200/60">
-            <span className="text-[11px] font-bold text-slate-500 uppercase tracking-wider block">
+          <div className="bg-[#f8fafc] p-3.5 rounded-xl border border-[#cbd5e1]">
+            <span className="text-[11px] font-bold text-[#475569] uppercase tracking-wider block">
               Saldo Petty Cash
             </span>
-            <div className="text-base sm:text-lg font-black text-slate-900 mt-0.5 font-mono">
+            <div className="text-base sm:text-lg font-black text-[#0f172a] mt-0.5 font-mono">
               {formatCurrencyIDR(summary.saldoAkhirPettyCash)}
             </div>
-            <div className="text-[10px] text-slate-500 mt-1 flex justify-between">
+            <div className="text-[10px] text-[#475569] mt-1 flex justify-between">
               <span>Awal: {formatRupiah(summary.saldoAwalPettyCash)}</span>
-              <span className="text-red-600">Keluar: {formatRupiah(summary.totalKreditOps)}</span>
+              <span className="text-[#dc2626] font-bold">Keluar: {formatRupiah(summary.totalKreditOps)}</span>
             </div>
           </div>
 
-          <div className="bg-slate-50/70 p-3.5 rounded-xl border border-slate-200/60">
-            <span className="text-[11px] font-bold text-slate-500 uppercase tracking-wider block">
+          <div className="bg-[#eff6ff] p-3.5 rounded-xl border border-[#93c5fd]">
+            <span className="text-[11px] font-bold text-[#1d4ed8] uppercase tracking-wider block">
               Saldo Bank ({company.bankName})
             </span>
-            <div className="text-base sm:text-lg font-black text-blue-900 mt-0.5 font-mono">
+            <div className="text-base sm:text-lg font-black text-[#1e3a8a] mt-0.5 font-mono">
               {formatCurrencyIDR(summary.saldoAkhirBank)}
             </div>
-            <div className="text-[10px] text-slate-500 mt-1 flex justify-between">
+            <div className="text-[10px] text-[#475569] mt-1 flex justify-between">
               <span>Awal: {formatRupiah(summary.saldoAwalBank)}</span>
-              <span className="text-emerald-600">Masuk: {formatRupiah(summary.totalDebitBank)}</span>
+              <span className="text-[#047857] font-bold">Masuk: {formatRupiah(summary.totalDebitBank)}</span>
             </div>
           </div>
 
-          <div className="bg-purple-50/50 p-3.5 rounded-xl border border-purple-200/60">
-            <span className="text-[11px] font-bold text-purple-700 uppercase tracking-wider block">
+          <div className="bg-[#faf5ff] p-3.5 rounded-xl border border-[#d8b4fe]">
+            <span className="text-[11px] font-bold text-[#7e22ce] uppercase tracking-wider block">
               Saldo Kasbon (Advance)
             </span>
-            <div className="text-base sm:text-lg font-black text-purple-950 mt-0.5 font-mono">
+            <div className="text-base sm:text-lg font-black text-[#581c87] mt-0.5 font-mono">
               {formatCurrencyIDR(summary.saldoAkhirAdvance)}
             </div>
-            <div className="text-[10px] text-purple-600 mt-1 flex justify-between">
+            <div className="text-[10px] text-[#7e22ce] mt-1 flex justify-between">
               <span>Debit: {formatRupiah(summary.totalDebetAdvance)}</span>
               <span>Kredit: {formatRupiah(summary.totalKreditAdvance)}</span>
             </div>
           </div>
 
-          <div className="bg-blue-600 text-white p-3.5 rounded-xl shadow-xs">
-            <span className="text-[11px] font-bold text-blue-200 uppercase tracking-wider block">
+          <div className="bg-[#1d4ed8] text-white p-3.5 rounded-xl shadow-md border border-[#1e40af]">
+            <span className="text-[11px] font-bold text-blue-100 uppercase tracking-wider block">
               Total Likuiditas (Cash + Bank)
             </span>
             <div className="text-base sm:text-lg font-black text-white mt-0.5 font-mono">
               {formatCurrencyIDR(summary.saldoAkhirCashBank)}
             </div>
-            <div className="text-[10px] text-blue-200 mt-1 flex justify-between">
+            <div className="text-[10px] text-blue-100 mt-1 flex justify-between">
               <span>Kas Fisik + Rekening</span>
-              <span>100% Cocok</span>
+              <span className="font-bold">100% Cocok</span>
             </div>
           </div>
         </div>
@@ -202,7 +205,7 @@ export const RekapTableView: React.FC<Props> = ({
         </div>
 
         <div className="flex items-center gap-1.5 w-full sm:w-auto overflow-x-auto pb-1 sm:pb-0">
-          <Filter className="w-3.5 h-3.5 text-slate-400 shrink-0" />
+          <Filter className="w-4 h-4 text-slate-600 shrink-0" />
           {[
             { id: 'ALL', label: 'Semua Transaksi' },
             { id: 'KAS_KELUAR', label: 'Kas Keluar (BKK)' },
@@ -213,10 +216,10 @@ export const RekapTableView: React.FC<Props> = ({
             <button
               key={tab.id}
               onClick={() => setFilterType(tab.id)}
-              className={`text-xs px-2.5 py-1 rounded-lg font-semibold whitespace-nowrap transition-colors ${
+              className={`text-xs px-3 py-1.5 rounded-lg font-bold whitespace-nowrap transition-all border cursor-pointer ${
                 filterType === tab.id
-                  ? 'bg-slate-900 text-white'
-                  : 'bg-slate-100 text-slate-600 hover:bg-slate-200'
+                  ? 'bg-[#1d4ed8] text-white border-[#1e40af] shadow-sm'
+                  : 'bg-[#f1f5f9] text-[#1e293b] border-[#cbd5e1] hover:bg-[#e2e8f0]'
               }`}
             >
               {tab.label}
@@ -362,14 +365,14 @@ export const RekapTableView: React.FC<Props> = ({
                     {formatRupiah(row.saldoCashBank)}
                   </td>
                   <td className="p-2 text-center whitespace-nowrap">
-                    <div className="flex items-center justify-center gap-1">
+                    <div className="flex items-center justify-center gap-1.5">
                       <button
                         onClick={() => onPrintSlip(row)}
                         title={`Cetak Slip ${row.voucherType} 1:1`}
-                        className={`p-1.5 rounded-lg border font-bold text-[10px] inline-flex items-center gap-1 ${
+                        className={`px-2 py-1 rounded-md border font-black text-[11px] inline-flex items-center gap-1 shadow-2xs transition-colors cursor-pointer ${
                           row.voucherType === 'BKK'
-                            ? 'text-red-700 bg-red-50 border-red-200 hover:bg-red-100'
-                            : 'text-slate-800 bg-slate-100 border-slate-300 hover:bg-slate-200'
+                            ? 'text-white bg-red-600 border-red-700 hover:bg-red-700'
+                            : 'text-white bg-slate-900 border-slate-950 hover:bg-black'
                         }`}
                       >
                         <Printer className="w-3.5 h-3.5" />
@@ -378,7 +381,7 @@ export const RekapTableView: React.FC<Props> = ({
                       <button
                         onClick={() => onEditTransaction(row)}
                         title="Edit Transaksi"
-                        className="p-1.5 text-slate-500 hover:text-blue-600 hover:bg-blue-50 rounded-lg transition-colors"
+                        className="p-1.5 bg-blue-100 text-blue-800 hover:bg-blue-200 border border-blue-300 rounded-md transition-colors cursor-pointer"
                       >
                         <Edit2 className="w-3.5 h-3.5" />
                       </button>
@@ -389,7 +392,7 @@ export const RekapTableView: React.FC<Props> = ({
                           }
                         }}
                         title="Hapus Transaksi"
-                        className="p-1.5 text-slate-400 hover:text-red-600 hover:bg-red-50 rounded-lg transition-colors"
+                        className="p-1.5 bg-rose-100 text-rose-800 hover:bg-rose-200 border border-rose-300 rounded-md transition-colors cursor-pointer"
                       >
                         <Trash2 className="w-3.5 h-3.5" />
                       </button>

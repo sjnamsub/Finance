@@ -136,10 +136,10 @@ export const CompanyPortalSelector: React.FC<Props> = ({
             </span>
             <button
               type="button"
-              className={`px-3 py-1.5 rounded-lg text-xs font-bold flex items-center gap-1.5 transition-colors ${
+              className={`px-3 py-1.5 rounded-lg text-xs font-bold flex items-center gap-1.5 transition-colors cursor-pointer ${
                 activeCompanyId === 'SRIWIJAYA'
-                  ? 'bg-blue-700 text-white'
-                  : 'bg-slate-100 text-slate-700 group-hover:bg-blue-600 group-hover:text-white'
+                  ? 'bg-[#002B7F] text-white shadow-xs'
+                  : 'bg-[#f1f5f9] text-[#1e293b] hover:bg-[#002B7F] hover:text-white border border-[#cbd5e1]'
               }`}
             >
               <span>{activeCompanyId === 'SRIWIJAYA' ? 'Sedang Aktif' : 'Buka Kas Sriwijaya Air'}</span>
@@ -230,10 +230,10 @@ export const CompanyPortalSelector: React.FC<Props> = ({
             </span>
             <button
               type="button"
-              className={`px-3 py-1.5 rounded-lg text-xs font-bold flex items-center gap-1.5 transition-colors ${
+              className={`px-3 py-1.5 rounded-lg text-xs font-bold flex items-center gap-1.5 transition-colors cursor-pointer ${
                 activeCompanyId === 'NAM'
-                  ? 'bg-sky-600 text-white'
-                  : 'bg-slate-100 text-slate-700 group-hover:bg-sky-600 group-hover:text-white'
+                  ? 'bg-[#0066B2] text-white shadow-xs'
+                  : 'bg-[#f1f5f9] text-[#1e293b] hover:bg-[#0066B2] hover:text-white border border-[#cbd5e1]'
               }`}
             >
               <span>{activeCompanyId === 'NAM' ? 'Sedang Aktif' : 'Buka Kas NAM Air'}</span>

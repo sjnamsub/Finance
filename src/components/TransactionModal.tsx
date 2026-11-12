@@ -374,30 +374,30 @@ export const TransactionModal: React.FC<Props> = ({
         </div>
 
         {/* Form Mode Selector: Standard vs Dedicated BBM in 1 BKK */}
-        <div className="bg-slate-100 p-2 border-b border-slate-200 flex items-center gap-2">
+        <div className="bg-slate-200 p-2.5 border-b border-slate-300 flex items-center gap-2.5">
           <button
             type="button"
             onClick={() => setModalMode('STANDARD')}
-            className={`flex-1 py-2 px-3 rounded-xl text-xs font-bold flex items-center justify-center gap-2 transition-all ${
+            className={`flex-1 py-2.5 px-3 rounded-xl text-xs font-black flex items-center justify-center gap-2 transition-all cursor-pointer border ${
               modalMode === 'STANDARD'
-                ? 'bg-white text-slate-900 shadow-sm ring-1 ring-slate-900/10'
-                : 'text-slate-600 hover:text-slate-900'
+                ? 'bg-blue-600 text-white shadow-md border-blue-700'
+                : 'bg-white text-slate-800 hover:bg-slate-100 border-slate-300'
             }`}
           >
-            <FileText className="w-4 h-4 text-blue-600" />
+            <FileText className="w-4 h-4 text-inherit" />
             <span>Form Transaksi Standar (Umum)</span>
           </button>
 
           <button
             type="button"
             onClick={() => setModalMode('BBM_BUNDLE')}
-            className={`flex-1 py-2 px-3 rounded-xl text-xs font-bold flex items-center justify-center gap-2 transition-all ${
+            className={`flex-1 py-2.5 px-3 rounded-xl text-xs font-black flex items-center justify-center gap-2 transition-all cursor-pointer border ${
               modalMode === 'BBM_BUNDLE'
-                ? 'bg-red-700 text-white shadow-sm ring-1 ring-red-800'
-                : 'text-slate-600 hover:text-red-700 hover:bg-red-50'
+                ? 'bg-red-700 text-white shadow-md border-red-800'
+                : 'bg-white text-red-800 hover:bg-red-50 border-red-300'
             }`}
           >
-            <Car className="w-4 h-4 text-amber-300" />
+            <Car className="w-4 h-4 text-inherit" />
             <span>🚗 Rincian BBM & Kendaraan Ops (1 BKK)</span>
           </button>
         </div>
@@ -579,7 +579,7 @@ export const TransactionModal: React.FC<Props> = ({
               </button>
               <button
                 type="submit"
-                className="px-5 py-2 bg-red-700 hover:bg-red-800 text-white rounded-lg text-xs font-bold shadow-sm"
+                className="px-5 py-2.5 bg-[#dc2626] hover:bg-[#b91c1c] text-white rounded-lg text-xs font-black shadow-md cursor-pointer border border-[#b91c1c]"
               >
                 Simpan ke 1 BKK (Otomatis Rinci)
               </button>
@@ -904,7 +904,7 @@ export const TransactionModal: React.FC<Props> = ({
               </button>
               <button
                 type="submit"
-                className="px-5 py-2 bg-blue-600 hover:bg-blue-700 text-white rounded-lg text-xs font-semibold shadow-xs"
+                className="px-5 py-2.5 bg-[#1d4ed8] hover:bg-[#1e40af] text-white rounded-lg text-xs font-black shadow-md cursor-pointer border border-[#1e40af]"
               >
                 Simpan Transaksi
               </button>
