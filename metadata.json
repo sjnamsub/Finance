@@ -1,0 +1,6 @@
+{
+  "name": "Finance & Petty Cash - PT Sriwijaya Air & PT NAM Air",
+  "description": "Sistem pencatatan kas harian, BKK, BMK, rekap petty cash & bank dwimingguan (1-15 & 16-30/31), cetak form 1:1, ekspor Excel, dan pengingat harian.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
